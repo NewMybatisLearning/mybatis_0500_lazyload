@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymd.learn.mapper.OrderMapper">
+
+	<select id="getOrderById" parameterType="int" resultMap="getOrderByIdMap">
+		select * from t_order where id = #{id}
+	</select>
+	
+	<resultMap type="com.ymd.learn.model.Order" id="getOrderByIdMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<association property="user" select="getUserById"
+			column="userId" > <!-- fetchType="eager" overrite lazy cache -->
+		</association>
+	</resultMap>
+	
+	<select id="getUserById" resultType="com.ymd.learn.model.User">
+		select * from t_user where id = #{userId}
+	</select>
+	
+	
+</mapper>
